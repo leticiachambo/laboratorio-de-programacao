@@ -1,0 +1,11 @@
+# Preparação e manipulação do dataset (Unidade 1)
+pillow>=10.0
+tqdm>=4.66
+
+# Persistência (Unidade 2/3)
+mysql-connector-python>=8.0
+
+# API e treinamento (a expandir na Unidade 2)
+# fastapi
+# uvicorn
+# torch / ultralytics / tensorflow

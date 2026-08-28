@@ -1,0 +1,69 @@
+digraph DER {
+  graph [rankdir=LR, splines=ortho, nodesep=0.6, ranksep=1.0, bgcolor="white", fontname="Helvetica"];
+  node [shape=none, fontname="Helvetica"];
+  edge [fontname="Helvetica", fontsize=10, color="#555555"];
+
+  usuario [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#2C3E50"><FONT COLOR="white"><B>usuario</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT">PK  id_usuario : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    nome : VARCHAR(120)</TD></TR>
+      <TR><TD ALIGN="LEFT">    email : VARCHAR(150) UNIQUE</TD></TR>
+      <TR><TD ALIGN="LEFT">    senha_hash : VARCHAR(255)</TD></TR>
+      <TR><TD ALIGN="LEFT">    papel : ENUM('usuario','admin')</TD></TR>
+      <TR><TD ALIGN="LEFT">    data_cadastro : DATETIME</TD></TR>
+    </TABLE>>];
+
+  imagem [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#2C3E50"><FONT COLOR="white"><B>imagem</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT">PK  id_imagem : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">FK  id_usuario : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    caminho_arquivo : VARCHAR(255)</TD></TR>
+      <TR><TD ALIGN="LEFT">    largura_px : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    altura_px : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    data_envio : DATETIME</TD></TR>
+    </TABLE>>];
+
+  deteccao [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#2C3E50"><FONT COLOR="white"><B>deteccao</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT">PK  id_deteccao : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">FK  id_imagem : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">FK  id_raca : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">FK  id_modelo : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    confianca : DECIMAL(5,4)</TD></TR>
+      <TR><TD ALIGN="LEFT">    bbox_x : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    bbox_y : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    bbox_largura : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    bbox_altura : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    data_deteccao : DATETIME</TD></TR>
+    </TABLE>>];
+
+  raca [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#2C3E50"><FONT COLOR="white"><B>raca</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT">PK  id_raca : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    nome_popular : VARCHAR(100)</TD></TR>
+      <TR><TD ALIGN="LEFT">    nome_cientifico : VARCHAR(100)</TD></TR>
+      <TR><TD ALIGN="LEFT">    descricao : TEXT</TD></TR>
+      <TR><TD ALIGN="LEFT">    origem_dataset : VARCHAR(100)</TD></TR>
+    </TABLE>>];
+
+  modelo [label=<
+    <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="6">
+      <TR><TD BGCOLOR="#2C3E50"><FONT COLOR="white"><B>modelo</B></FONT></TD></TR>
+      <TR><TD ALIGN="LEFT">PK  id_modelo : INT</TD></TR>
+      <TR><TD ALIGN="LEFT">    nome : VARCHAR(100)</TD></TR>
+      <TR><TD ALIGN="LEFT">    versao : VARCHAR(20)</TD></TR>
+      <TR><TD ALIGN="LEFT">    arquitetura : VARCHAR(100)</TD></TR>
+      <TR><TD ALIGN="LEFT">    formato_exportacao : VARCHAR(30)</TD></TR>
+      <TR><TD ALIGN="LEFT">    data_treinamento : DATETIME</TD></TR>
+      <TR><TD ALIGN="LEFT">    ativo : BOOLEAN</TD></TR>
+    </TABLE>>];
+
+  usuario -> imagem [label="  1 : N  envia", arrowhead=crow, arrowtail=none];
+  imagem -> deteccao [label="  1 : N  gera", arrowhead=crow, arrowtail=none];
+  raca -> deteccao [label="  1 : N  classifica", arrowhead=crow, arrowtail=none];
+  modelo -> deteccao [label="  1 : N  produz", arrowhead=crow, arrowtail=none];
+}

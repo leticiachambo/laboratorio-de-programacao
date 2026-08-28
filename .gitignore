@@ -1,0 +1,28 @@
+# Dataset (grande, não versionar)
+dataset/raw/
+dataset/processed/
+
+# Modelos treinados
+models/*.pt
+models/*.onnx
+models/*.tflite
+models/*.h5
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Node (frontend, se aplicável)
+node_modules/
+
+# Ambiente / segredos
+.env
+*.log
+
+# Sistema operacional / editores
+.DS_Store
+.vscode/
+.idea/
