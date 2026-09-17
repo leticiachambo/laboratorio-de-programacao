@@ -31,7 +31,7 @@ Estrutura gerada em dataset/processed/:
         raca_seed.csv        (dados prontos para popular a tabela `raca`)
 
 Uso:
-    python prepare_dataset.py --raças Chihuahua Beagle Pug ... \
+    python prepare_dataset.py --racas Chihuahua Beagle Pug ... \
                                --train 0.70 --val 0.15 --test 0.15
 
 Se --racas não for informado, o script usa uma lista padrão de 12 raças
@@ -146,6 +146,9 @@ def write_split(name, samples, breeds):
     for img_path, ann_path, class_id, _ in samples:
         width, height, boxes = parse_voc_annotation(ann_path)
         shutil.copy(img_path, img_out / img_path.name)
+        # TODO: imagens sem nenhuma bounding box geram um .txt de label vazio.
+        # Verificar na Unidade 2 se o pipeline de treino (YOLO) aceita isso ou
+        # se essas amostras devem ser descartadas aqui.
         lines = [voc_to_yolo_line(class_id, width, height, b) for b in boxes]
         (lbl_out / (img_path.stem + ".txt")).write_text("\n".join(lines))
 
